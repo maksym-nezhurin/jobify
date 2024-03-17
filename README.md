@@ -3050,7 +3050,7 @@ function ButtonContainer({ currentPage, totalPages }: ButtonContainerProps) {
     router.push(`${pathname}?${params.toString()}`);
   };
   return (
-    <div className='flex  gap-x-2'>
+    <div className='flex gap-x-2'>
       {pageButtons.map((page) => {
         return (
           <Button
@@ -3177,7 +3177,7 @@ function ButtonContainer({ currentPage, totalPages }: ButtonContainerProps) {
   };
 
   return (
-    <div className='flex  gap-x-2'>
+    <div className='flex gap-x-2'>
       {/* prev */}
       <Button
         className='flex items-center gap-x-2 '

@@ -3,6 +3,8 @@ import JobCard from './JobCard';
 import { useSearchParams } from 'next/navigation';
 import { getAllJobsAction } from '@/utils/actions';
 import { useQuery } from '@tanstack/react-query';
+import {JobType} from "@/utils/types";
+import ButtonContainer from "@/components/ComplexButtonContainer";
 
 function JobsList() {
     const searchParams = useSearchParams();
@@ -14,7 +16,7 @@ function JobsList() {
         queryKey: ['jobs', search ?? '', jobStatus, pageNumber],
         queryFn: () => getAllJobsAction({ search, jobStatus, page: pageNumber }),
     });
-    const jobs = data?.jobs || [];
+    const { count = 0, jobs = [], totalPages = 0, page = 0 } = data || {};
 
     if (isPending) return <h2 className='text-xl'>Please Wait...</h2>;
 
@@ -22,9 +24,14 @@ function JobsList() {
 
     return (
         <>
-            {/*button container  */}
-            <div className='grid md:grid-cols-2  gap-8'>
-                {jobs.map((job) => {
+            <div className='flex flex-col md:flex-row items-center justify-between m-5'>
+                <h2 className='text-xl font-semibold capitalize'>{count} jobs found</h2>
+                {
+                    totalPages < 2 ? null : <ButtonContainer currentPage={page} totalPages={totalPages} />
+                }
+            </div>
+            <div className='grid md:grid-cols-2 gap-8'>
+                {jobs.map((job: JobType) => {
                     return <JobCard key={job.id} job={job} />;
                 })}
             </div>
